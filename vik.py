@@ -51,18 +51,28 @@ class Vik:
 			if result == None:
 				return
 			elif result == True:
-				print("saved")
-		self.filepath = None
-		self.filename = None
-		self.filetype = None
-		self.filenameonly = None
-		self.master.title("Untitled -- Vik Text Editor")
-		self.textArea.delete(1.0, tk.END)
+				self.saveFile()
+		else:
+			self.filepath = None
+			self.filename = None
+			self.filetype = None
+			self.filenameonly = None
+			self.master.title("Untitled -- Vik Text Editor")
+			self.textArea.delete(1.0, tk.END)
 	def saveFile(self):
 		pass
 	def saveAsFile(self):
 		pass
 	def openFile(self):
+		if self.filepath:
+			result = messagebox.askyesnocancel(title = "Alert!", message = "Save Current File ? ")
+			if result == True:
+				self.saveFile()
+			elif result == False:
+				pass
+			elif result == None:
+				return
+
 		self.filepath = filedialog.askopenfilename(defaultextension = "*.*")
 		print(self.filepath)
 		if self.filepath:
