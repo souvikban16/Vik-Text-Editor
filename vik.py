@@ -14,6 +14,7 @@ class Menubar:
 		menubar.add_command(label = "Save As", command = parent.saveAsFile)
 		menubar.add_command(label = "Open", command = parent.openFile)
 		menubar.add_command(label = "About", command = parent.showAbout)
+		menubar.add_command(label = "Change Font size", command = parent.changeFontSize)
 		menubar.add_separator()
 		menubar.add_separator()
 		menubar.add_separator()
@@ -33,7 +34,8 @@ class Vik:
 		self.filenameonly = None
 		self.cwd = None
 		self.filetype = None
-		self.textArea = tk.Text(master, font =("Consolas", 18))
+		self.fontsize = 18
+		self.textArea = tk.Text(master, font =("Consolas", self.fontsize))
 		self.scrollBarY = tk.Scrollbar(master, command = self.textArea.yview)
 		# self.scrollBarX = tk.Scrollbar(master, command = self.textArea.xview)
 		self.textArea.configure(yscrollcommand = self.scrollBarY.set)
@@ -171,6 +173,9 @@ class Vik:
 				temp = 'start cmd /k \"cd '+ self.cwd + ' && java ' + result + "\""
 				os.system(temp)
 				print(temp)
+	def changeFontSize(self):
+		self.fontsize = simpledialog.askinteger("Input", "Enter font size")
+		self.textArea.config(font = ("Consolas",self.fontsize))
 
 
 
