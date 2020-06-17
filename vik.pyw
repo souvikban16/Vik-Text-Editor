@@ -49,15 +49,38 @@ class Vik:
 	def newFile(self):
 
 		if self.filepath:
+			original = ""
+			with open(self.filepath, "r") as file:
+				original = file.read()
+			current = self.textArea.get(1.0, tk.END) 
+			if original == current:
+				print("They are the same")
+				self.filepath = None
+				self.filename = None
+				self.filetype = None
+				self.filenameonly = None
+				self.master.title("Untitled -- Vik Text Editor")
+				self.textArea.delete(1.0, tk.END)
+				return
 			result = messagebox.askyesnocancel(title = "Alert!", message = "Save File first ? ")
 			print(result)
 			if result == None:
 				return
 			elif result == True:
 				self.saveFile()
+				self.filepath = None
+				self.filename = None
+				self.filetype = None
+				self.filenameonly = None
+				self.master.title("Untitled -- Vik Text Editor")
+				self.textArea.delete(1.0, tk.END)
 			elif result == False:
-				self.filepath == None
-				self.newFile()
+				self.filepath = None
+				self.filename = None
+				self.filetype = None
+				self.filenameonly = None
+				self.master.title("Untitled -- Vik Text Editor")
+				self.textArea.delete(1.0, tk.END)
 		else:
 			textAreaContent = self.textArea.get(1.0, tk.END)
 			print(len(textAreaContent))
@@ -65,8 +88,19 @@ class Vik:
 				result = messagebox.askyesnocancel(title = "Alert!", message = "Save Current File ? ")
 				if result == True:
 					self.saveFile()
+					self.filepath = None
+					self.filename = None
+					self.filetype = None
+					self.filenameonly = None
+					self.master.title("Untitled -- Vik Text Editor")
+					self.textArea.delete(1.0, tk.END)
 				elif result == False:
-					pass
+					self.filepath = None
+					self.filename = None
+					self.filetype = None
+					self.filenameonly = None
+					self.master.title("Untitled -- Vik Text Editor")
+					self.textArea.delete(1.0, tk.END)
 				elif result == None:
 					return
 				
@@ -83,48 +117,86 @@ class Vik:
 			textAreaContent = self.textArea.get(1.0, tk.END)
 			with open(self.filepath, "w") as f:
 				f.write(textAreaContent)
+			messagebox.showinfo("Alert!", message = "File Saved Successfully")
 
 
 	def saveAsFile(self):
 		self.filepath = filedialog.asksaveasfilename(defaultextension = "*.*")
-		textAreaContent = self.textArea.get(1.0, tk.END)
-		with open(self.filepath, "w") as f:
-			f.write(textAreaContent)
-		self.master.title(self.filepath + " -- Vik Text Editor")
-		index = self.filepath.rfind("/")
-		self.filename = self.filepath[index + 1 :]
-		self.cwd = self.filepath[:index]
-		dotindex = self.filepath.rfind(".")
-		self.filetype = self.filepath[dotindex + 1 :]
-		self.filenameonly = self.filepath[index + 1:dotindex]
+		if self.filepath:
+			textAreaContent = self.textArea.get(1.0, tk.END)
+			with open(self.filepath, "w") as f:
+				f.write(textAreaContent)
+			self.master.title(self.filepath + " -- Vik Text Editor")
+			index = self.filepath.rfind("/")
+			self.filename = self.filepath[index + 1 :]
+			self.cwd = self.filepath[:index]
+			dotindex = self.filepath.rfind(".")
+			self.filetype = self.filepath[dotindex + 1 :]
+			self.filenameonly = self.filepath[index + 1:dotindex]
+			messagebox.showinfo("Alert!", message = "File Saved Successfully")
 
 	def openFile(self):
 		if self.filepath:
 			result = messagebox.askyesnocancel(title = "Alert!", message = "Save Current File ? ")
 			if result == True:
 				self.saveFile()
+				self.filepath = filedialog.askopenfilename(defaultextension = "*.*")
+				print(self.filepath)
+				if self.filepath:
+					self.textArea.delete(1.0, tk.END)
+					with open(self.filepath, "r") as file:
+						self.textArea.insert(1.0, file.read())
+					self.master.title(self.filepath + " -- Vik Text Editor")
+					index = self.filepath.rfind("/")
+					self.filename = self.filepath[index + 1 :]
+					self.cwd = self.filepath[:index]
+					dotindex = self.filepath.rfind(".")
+					self.filetype = self.filepath[dotindex + 1 :]
+					self.filenameonly = self.filepath[index + 1:dotindex]
+					print(self.filepath)
+					print(self.cwd)
+					print(self.filename)
+					print(self.filetype)
+
 			elif result == False:
-				pass
+				self.filepath = filedialog.askopenfilename(defaultextension = "*.*")
+				print(self.filepath)
+				if self.filepath:
+					self.textArea.delete(1.0, tk.END)
+					with open(self.filepath, "r") as file:
+						self.textArea.insert(1.0, file.read())
+					self.master.title(self.filepath + " -- Vik Text Editor")
+					index = self.filepath.rfind("/")
+					self.filename = self.filepath[index + 1 :]
+					self.cwd = self.filepath[:index]
+					dotindex = self.filepath.rfind(".")
+					self.filetype = self.filepath[dotindex + 1 :]
+					self.filenameonly = self.filepath[index + 1:dotindex]
+					print(self.filepath)
+					print(self.cwd)
+					print(self.filename)
+					print(self.filetype)
 			elif result == None:
 				return
+		else:
 
-		self.filepath = filedialog.askopenfilename(defaultextension = "*.*")
-		print(self.filepath)
-		if self.filepath:
-			self.textArea.delete(1.0, tk.END)
-			with open(self.filepath, "r") as file:
-				self.textArea.insert(1.0, file.read())
-		self.master.title(self.filepath + " -- Vik Text Editor")
-		index = self.filepath.rfind("/")
-		self.filename = self.filepath[index + 1 :]
-		self.cwd = self.filepath[:index]
-		dotindex = self.filepath.rfind(".")
-		self.filetype = self.filepath[dotindex + 1 :]
-		self.filenameonly = self.filepath[index + 1:dotindex]
-		print(self.filepath)
-		print(self.cwd)
-		print(self.filename)
-		print(self.filetype)
+			self.filepath = filedialog.askopenfilename(defaultextension = "*.*")
+			print(self.filepath)
+			if self.filepath:
+				self.textArea.delete(1.0, tk.END)
+				with open(self.filepath, "r") as file:
+					self.textArea.insert(1.0, file.read())
+				self.master.title(self.filepath + " -- Vik Text Editor")
+				index = self.filepath.rfind("/")
+				self.filename = self.filepath[index + 1 :]
+				self.cwd = self.filepath[:index]
+				dotindex = self.filepath.rfind(".")
+				self.filetype = self.filepath[dotindex + 1 :]
+				self.filenameonly = self.filepath[index + 1:dotindex]
+				print(self.filepath)
+				print(self.cwd)
+				print(self.filename)
+				print(self.filetype)
 
 
 	def showAbout(self):
