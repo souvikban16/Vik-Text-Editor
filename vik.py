@@ -52,7 +52,21 @@ class Vik:
 				return
 			elif result == True:
 				self.saveFile()
+			elif result == False:
+				self.filepath == None
+				self.newFile()
 		else:
+			textAreaContent = self.textArea.get(1.0, tk.END)
+			print(len(textAreaContent))
+			if len(textAreaContent) > 1:
+				result = messagebox.askyesnocancel(title = "Alert!", message = "Save Current File ? ")
+				if result == True:
+					self.saveFile()
+				elif result == False:
+					pass
+				elif result == None:
+					return
+				
 			self.filepath = None
 			self.filename = None
 			self.filetype = None
@@ -60,9 +74,27 @@ class Vik:
 			self.master.title("Untitled -- Vik Text Editor")
 			self.textArea.delete(1.0, tk.END)
 	def saveFile(self):
-		pass
+		if not self.filepath:
+			self.saveAsFile()
+		else:
+			textAreaContent = self.textArea.get(1.0, tk.END)
+			with open(self.filepath, "w") as f:
+				f.write(textAreaContent)
+
+
 	def saveAsFile(self):
-		pass
+		self.filepath = filedialog.asksaveasfilename(defaultextension = "*.*")
+		textAreaContent = self.textArea.get(1.0, tk.END)
+		with open(self.filepath, "w") as f:
+			f.write(textAreaContent)
+		self.master.title(self.filepath + " -- Vik Text Editor")
+		index = self.filepath.rfind("/")
+		self.filename = self.filepath[index + 1 :]
+		self.cwd = self.filepath[:index]
+		dotindex = self.filepath.rfind(".")
+		self.filetype = self.filepath[dotindex + 1 :]
+		self.filenameonly = self.filepath[index + 1:dotindex]
+
 	def openFile(self):
 		if self.filepath:
 			result = messagebox.askyesnocancel(title = "Alert!", message = "Save Current File ? ")
@@ -111,6 +143,15 @@ class Vik:
 				temp = 'start cmd /k \"cd '+ self.cwd + ' && g++ ' + self.filename + " -o " + self.filenameonly + "\""
 				os.system(temp)
 				print(temp)
+			elif self.filetype == "c":
+				temp = 'start cmd /k \"cd '+ self.cwd + ' && gcc ' + self.filename + " -o " + self.filenameonly + "\""
+				os.system(temp)
+				print(temp)
+			elif self.filetype == "java":
+				temp = 'start cmd /k \"cd '+ self.cwd + ' && javac ' + self.filename + "\""
+				os.system(temp)
+				print(temp)
+
 	def runFile(self):
 		if not self.filepath:
 			messagebox.showerror(title = "Alert!", message = "Save file first!")
@@ -121,6 +162,13 @@ class Vik:
 			elif self.filetype == "cpp":
 				temp  = 'start cmd /k \"cd '+ self.cwd + ' && ' + self.filenameonly +"\""
 				os.system(temp)
+			elif self.filetype == "c":
+				temp  = 'start cmd /k \"cd '+ self.cwd + ' && ' + self.filenameonly +"\""
+				os.system(temp)
+			elif self.filetype == "java":
+				temp = 'start cmd /k \"cd '+ self.cwd + ' && javac ' + self.filename + "\""
+				os.system(temp)
+				print(temp)
 
 
 
