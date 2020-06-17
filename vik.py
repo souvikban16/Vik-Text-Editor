@@ -2,6 +2,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
+from tkinter import simpledialog
 
 class Menubar:
 
@@ -32,7 +33,7 @@ class Vik:
 		self.filenameonly = None
 		self.cwd = None
 		self.filetype = None
-		self.textArea = tk.Text(master)
+		self.textArea = tk.Text(master, font =("Consolas", 18))
 		self.scrollBarY = tk.Scrollbar(master, command = self.textArea.yview)
 		# self.scrollBarX = tk.Scrollbar(master, command = self.textArea.xview)
 		self.textArea.configure(yscrollcommand = self.scrollBarY.set)
@@ -166,7 +167,8 @@ class Vik:
 				temp  = 'start cmd /k \"cd '+ self.cwd + ' && ' + self.filenameonly +"\""
 				os.system(temp)
 			elif self.filetype == "java":
-				temp = 'start cmd /k \"cd '+ self.cwd + ' && javac ' + self.filename + "\""
+				result = simpledialog.askstring("Input", "Enter the class name with the main method")
+				temp = 'start cmd /k \"cd '+ self.cwd + ' && java ' + result + "\""
 				os.system(temp)
 				print(temp)
 
