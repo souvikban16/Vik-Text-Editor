@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
 from tkinter import simpledialog
+import re
 
 class Menubar:
 
@@ -35,6 +36,7 @@ class Vik:
 		self.cwd = None
 		self.filetype = None
 		self.fontsize = 18
+		self.current_indent = 0
 		self.textArea = tk.Text(master, font =("Consolas", self.fontsize))
 		self.scrollBarY = tk.Scrollbar(master, command = self.textArea.yview)
 		# self.scrollBarX = tk.Scrollbar(master, command = self.textArea.xview)
@@ -45,6 +47,13 @@ class Vik:
 		# self.scrollBarX.pack(side = tk.BOTTOM, fill = tk.X)
 
 		self.menu = Menubar(self)
+
+		#keyboard binds
+		self.textArea.bind("<KeyRelease-BackSpace>",self.counttabs)
+		self.textArea.bind("<Return>", self.indent)
+		self.textArea.bind("<Tab>",self.counttabsTab)
+		self.textArea.bind("Ctrl-s")
+
 
 	def newFile(self):
 
@@ -250,9 +259,48 @@ class Vik:
 		self.textArea.config(font = ("Consolas",self.fontsize))
 
 
+	def counttabs(event, self):
+	    # the text widget that received the event
+	    # widget = event.widget
+
+	    # get current line
+	    line = event.textArea.get("insert linestart", "insert lineend")
+
+	    # compute the indentation of the current line
+	    match = re.match(r'^(\s+)', line)
+	    # global current_indent
+	    event.current_indent = len(match.group(0)) if match else 0
+	    print(event.current_indent,1)
+
+	def counttabsTab(event, self):
+	    
+	    #first inserting a tab
+	    event.textArea.insert(tk.INSERT, "\t")
+	    # the text widget that received the event
+	    # widget = event.widget
+
+	    # get current line
+	    line = event.textArea.get("insert linestart", "insert lineend")
+
+	    # compute the indentation of the current line
+	    match = re.match(r'^(\s+)', line)
+	    # global current_indent
+	    event.current_indent = len(match.group(0)) if match else 0
+	    print(event.current_indent,1)
+	    return 'break'
+
+	def indent(event, self ):
+	    print (event.current_indent,1)
+	    event.textArea.insert(tk.INSERT, "\n")
+	    event.textArea.insert(tk.INSERT, event.current_indent * "\t")
+	    return 'break'
+
+
+
 
 
 if __name__ == "__main__":
 	master = tk.Tk()
 	vik = Vik(master)
 	master.mainloop()
+
