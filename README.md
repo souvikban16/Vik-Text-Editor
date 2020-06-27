@@ -25,7 +25,7 @@ Because Vik Text Editor is here to take care of you if your starting out to writ
 There are *two* methods to run the program. You can use any one of them.
 Either,
 
- 1. Clone the whole repository and run the program using **Vik-Text-Editor/dest/vik.exe**
+ 1. Clone the whole repository and run the program using **Vik-Text-Editor/dist/vik.exe**
  
  or,
  
