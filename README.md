@@ -11,6 +11,7 @@ Because Vik Text Editor is here to take care of you if your starting out to writ
 
 
 # Features
+![Vik Text Editor in action](https://i.imgur.com/J08Yv2C.png)
 
  - Very lightweight and portable. Version with setup are in the making
  - Create, Edit, Compile and Run C, C++, Java and Python programs without going out of the editor
@@ -29,7 +30,7 @@ Either,
  or,
  
  2. Download the executable only from the link given below
-	 <link>
+	 https://github.com/souvikban16/Vik-Text-Editor/releases/tag/1.01
 
  
 
