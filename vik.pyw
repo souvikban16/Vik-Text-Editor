@@ -215,24 +215,24 @@ class Vik:
 		if not self.filepath:
 			messagebox.showerror(title = "Alert!", message = "Save file first!")
 		else:
-			os.system("start cmd /k cd " + self.cwd)
+			os.system("start cmd /k cd /d " + self.cwd)
 	def buildFile(self):
 		if not self.filepath:
 			messagebox.showerror(title = "Alert!", message = "Save file first!")
 		else:
 			if self.filetype == "py":
-				temp = 'start cmd /k \"cd '+ self.cwd + ' && python ' + self.filename +"\""
+				temp = 'start cmd /k \"cd /d '+ self.cwd + ' && python ' + self.filename +"\""
 				os.system(temp)
 			elif self.filetype == "cpp":
-				temp = 'start cmd /k \"cd '+ self.cwd + ' && g++ ' + self.filename + " -o " + self.filenameonly + "\""
+				temp = 'start cmd /k \"cd /d '+ self.cwd + ' && g++ ' + self.filename + " -o " + self.filenameonly + "\""
 				os.system(temp)
 				print(temp)
 			elif self.filetype == "c":
-				temp = 'start cmd /k \"cd '+ self.cwd + ' && gcc ' + self.filename + " -o " + self.filenameonly + "\""
+				temp = 'start cmd /k \"cd /d '+ self.cwd + ' && gcc ' + self.filename + " -o " + self.filenameonly + "\""
 				os.system(temp)
 				print(temp)
 			elif self.filetype == "java":
-				temp = 'start cmd /k \"cd '+ self.cwd + ' && javac ' + self.filename + "\""
+				temp = 'start cmd /k \"cd /d '+ self.cwd + ' && javac ' + self.filename + "\""
 				os.system(temp)
 				print(temp)
 
@@ -241,17 +241,17 @@ class Vik:
 			messagebox.showerror(title = "Alert!", message = "Save file first!")
 		else:
 			if self.filetype == "py":
-				temp = 'start cmd /k \"cd '+ self.cwd + ' && python ' + self.filename +" \""
+				temp = 'start cmd /k \"cd /d '+ self.cwd + ' && python ' + self.filename +" \""
 				os.system(temp)
 			elif self.filetype == "cpp":
-				temp  = 'start cmd /k \"cd '+ self.cwd + ' && ' + self.filenameonly +"\""
+				temp  = 'start cmd /k \"cd /d '+ self.cwd + ' && ' + self.filenameonly +"\""
 				os.system(temp)
 			elif self.filetype == "c":
-				temp  = 'start cmd /k \"cd '+ self.cwd + ' && ' + self.filenameonly +"\""
+				temp  = 'start cmd /k \"cd /d '+ self.cwd + ' && ' + self.filenameonly +"\""
 				os.system(temp)
 			elif self.filetype == "java":
 				result = simpledialog.askstring("Input", "Enter the class name with the main method")
-				temp = 'start cmd /k \"cd '+ self.cwd + ' && java ' + result + "\""
+				temp = 'start cmd /k \"cd /d '+ self.cwd + ' && java ' + result + "\""
 				os.system(temp)
 				print(temp)
 	def changeFontSize(self):

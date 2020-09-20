@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['vik.pyw'],
-             pathex=['C:\\Users\\k\\Documents\\GitHub\\Vik-Text-Editor'],
+             pathex=['C:\\Users\\Souvik Banerjee\\Documents\\GitHub\\Vik-Text-Editor'],
              binaries=[],
              datas=[],
              hiddenimports=[],
