@@ -30,4 +30,4 @@ Either,
  or,
  
  2. Download the executable only from the link given below
-	 https://github.com/souvikban16/Vik-Text-Editor/releases/tag/1.01
+	 https://github.com/souvikban16/Vik-Text-Editor/releases/tag/1.03
